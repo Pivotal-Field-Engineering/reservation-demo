@@ -1,9 +1,6 @@
 package io.pivotal.reactive;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -16,5 +13,6 @@ public class Reservation {
     private String id;
     @NonNull
     private String name;
+    @NonNull
     private String status;
 }

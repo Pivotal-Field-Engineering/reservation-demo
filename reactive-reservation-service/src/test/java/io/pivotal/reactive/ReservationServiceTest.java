@@ -17,9 +17,11 @@ public class ReservationServiceTest {
     @Autowired
     ReservationService reservationService;
 
+
     @Test
     public void getEventsTest()
     {
+
         String reservationId = this.reservationService
                 .findAll()
                 .blockFirst()

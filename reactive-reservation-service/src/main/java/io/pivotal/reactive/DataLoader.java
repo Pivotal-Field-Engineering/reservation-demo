@@ -14,18 +14,19 @@ public class DataLoader {
     }
 
     @PostConstruct
-    private void loadData() {
-        this.reservationRepository.deleteAll().thenMany(
-                Flux.just("Paris",
-                        "Tokyo",
-                        "Milan")
-                        .map(Reservation::new)
-                        .flatMap(this.reservationRepository::save))
-                .subscribe(System.out::println);
+    public  void loadData() {
 
-//        System.out.println("\nAll records in DB:\n");
-//        this.movieRepository
-//                .findAll()
-//                .subscribe(movie -> System.out.println("> Found in DB: " + movie.toString()));
+        Flux<Reservation> reservations = Flux.just(
+                new Reservation("Tokyo", "booked"),
+                new Reservation("Paris", "booked"),
+                new Reservation("Milan", "booked"));
+
+        this.reservationRepository.saveAll(reservations).subscribe(System.out::println);
+
+
+        System.out.println("\nAll records in DB:\n");
+        this.reservationRepository
+                .findAll()
+                .subscribe(movie -> System.out.println("> Found in DB: " + movie));
     }
 }
