@@ -24,16 +24,26 @@ public class ReservationControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    ReservationRepository repo;
+    ReservationService reservationService;
 
     ObjectMapper mapper = new ObjectMapper();
 
     @Test
     public void getReservationTest() throws Exception
     {
-        Mockito.when(repo.findAll()).thenReturn(Collections.singletonList(new Reservation(null, "John Doe", "booked")));
+        Mockito.when(reservationService.findAll()).thenReturn(Collections.singletonList(new Reservation(null, "John Doe", "booked")));
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/reservations")).andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
+
+    @Test
+    public void getReservationByIdTest() throws Exception
+    {
+        Long id = 1L;
+        Mockito.when(reservationService.findReservationById(id)).thenReturn(new Reservation(1L, "John Doe", "booked"));
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/reservations/1")).andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 
@@ -44,7 +54,7 @@ public class ReservationControllerTest {
 
         List<Reservation> col = Collections.singletonList(res);
 
-        Mockito.when(this.repo.saveAll(col)).thenReturn(col);
+        Mockito.when(this.reservationService.saveAll(col)).thenReturn(col);
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/reservations").content(mapper.writeValueAsString(col)).contentType("application/json").characterEncoding("UTF-8"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
