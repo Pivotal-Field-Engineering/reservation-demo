@@ -22,8 +22,7 @@ public class ReservationService {
 	public Collection<Reservation> getAllReservation() {
 
 		ResponseEntity<Collection<Reservation>> response = restTemplate.exchange(
-				"https://reservation-service.apps.gcp.pcf-arau.com/reservations/", HttpMethod.GET, null,
-
+				"http://localhost:8080/reservations", HttpMethod.GET, null,
 
 				new ParameterizedTypeReference<Collection<Reservation>>() {
 				});
